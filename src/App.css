@@ -1,7 +1,12 @@
 .App {
   text-align: center;
 }
-
+.ui.secondary.pointing.menu .active.item {
+  border-color:#3DA836 !important;
+}
+.ui.segment, .ui.attached.segment {
+  border:none;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
