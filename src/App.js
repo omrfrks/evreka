@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import EventComponent from "./components/Event";
 import "semantic-ui-css/semantic.min.css";
-import { Grid, Header } from "semantic-ui-react";
+import { Grid, Header, Dropdown } from "semantic-ui-react";
 import example from "./data";
 import EventDetailsComponent from "./components/EventDetails";
 import "./App.css";
-import Sort from "./components/Sort"
+import Sort from "./components/Sort";
 
 function App() {
   const [data, setData] = useState(
@@ -14,6 +14,13 @@ function App() {
   const [EventElements, setEventElements] = useState([]);
   const [eventDetails, setEventDetails] = useState(null);
   const [activeEventIndex, setActiveEventIndex] = useState(null);
+  const [activeDrapdownValue, setActiveDrapdownValue] = useState("date");
+  const dropdownOptions = [
+    { key: 1, text: "Date", value: "date" },
+    { key: 2, text: "Type", value: "type" },
+    { key: 3, text: "Bin id", value: "id" },
+    { key: 4, text: "Action", value: "action" },
+  ];
 
   let activeEvent = null;
   const handleEventClick = (event, i, e) => {
@@ -95,11 +102,19 @@ function App() {
       >
         <Grid.Column width={10} style={{ overflowY: "auto", height: "89vh" }}>
           <Header as="h1">EVENTS</Header>
-          <Sort by="date">{EventElements}</Sort>
+          <Dropdown
+            placeholder="Select title to Sort"
+            onChange={(e, { value }) => {
+              setActiveDrapdownValue(value);
+            }}
+            search
+            selection
+            options={dropdownOptions}
+          />
+          <Sort by={activeDrapdownValue} children={EventElements} />
         </Grid.Column>
         <Grid.Column width={6} style={{ overflowY: "auto", height: "89vh" }}>
           <Header as="h1">EVENT DETAILS</Header>
-
           {eventDetails ? (
             <EventDetailsComponent
               event={eventDetails}
