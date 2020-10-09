@@ -2,15 +2,22 @@ import React, { useState, useEffect } from "react";
 import EventComponent from "./components/Event";
 import "semantic-ui-css/semantic.min.css";
 import { Grid, Header } from "semantic-ui-react";
-import data from "./data";
+import example from "./data";
 import EventDetailsComponent from "./components/EventDetails";
 import "./App.css";
+import Sort from "./components/Sort"
 
 function App() {
+  const [data, setData] = useState(
+    JSON.parse(window.localStorage.getItem("data")) || null
+  );
   const [EventElements, setEventElements] = useState([]);
-  const [eventDetails, setEventDetails] = useState({});
+  const [eventDetails, setEventDetails] = useState(null);
+  const [activeEventIndex, setActiveEventIndex] = useState(null);
+
   let activeEvent = null;
   const handleEventClick = (event, i, e) => {
+    setActiveEventIndex(i);
     if (activeEvent) {
       activeEvent.classList.remove("activeEvent");
     }
@@ -21,11 +28,11 @@ function App() {
 
   const createEventComponents = (data) => {
     const EventElementsTemp = [];
-    data.data.forEach((event, i) => {
+    data.forEach((event, i) => {
       EventElementsTemp.push(
         <EventComponent
           handleClick={(e) => handleEventClick(event, i, e)}
-          key={[activeEvent, i]}
+          key={i}
           date={event.details[0].value}
           type={event.type}
           id={event.id}
@@ -37,14 +44,24 @@ function App() {
     });
     setEventElements(EventElementsTemp);
   };
+  const storageChange = () => {
+    setData(JSON.parse(window.localStorage.getItem("data")));
+  };
   useEffect(() => {
-    data.data.forEach((event) => {
-      event.details[0].value = new Date(
-        event.details[0].value
-      ).toLocaleString();
-    });
-    createEventComponents(data);
-  }, []);
+    if (!window.localStorage.getItem("data")) {
+      window.localStorage.setItem("data", JSON.stringify(example.data));
+      setData(example.data);
+    }
+    if (data) {
+      data.forEach((event) => {
+        event.details[0].value = new Date(
+          event.details[0].value
+        ).toLocaleString();
+      });
+      createEventComponents(data);
+    }
+  }, [data]);
+
   return (
     <div
       className="App"
@@ -78,11 +95,20 @@ function App() {
       >
         <Grid.Column width={10} style={{ overflowY: "auto", height: "89vh" }}>
           <Header as="h1">EVENTS</Header>
-          {EventElements}
+          <Sort by="date">{EventElements}</Sort>
         </Grid.Column>
         <Grid.Column width={6} style={{ overflowY: "auto", height: "89vh" }}>
           <Header as="h1">EVENT DETAILS</Header>
-          <EventDetailsComponent event={eventDetails} />
+
+          {eventDetails ? (
+            <EventDetailsComponent
+              event={eventDetails}
+              storageChange={storageChange}
+              activeEventIndex={activeEventIndex}
+            />
+          ) : (
+            <p>Select event to see details</p>
+          )}
         </Grid.Column>
       </Grid>
     </div>

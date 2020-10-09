@@ -1,10 +1,24 @@
-import React from "react";
-import { Button, Segment, Tab, List, Header, Image } from "semantic-ui-react";
+import React, { useState } from "react";
+import {
+  Button,
+  Segment,
+  Tab,
+  List,
+  Header,
+  Image,
+  Modal,
+} from "semantic-ui-react";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import ModelComponent from "./Modal";
 
 const EventDetailsComponent = (props) => {
+  const noActionHandle = () => {
+    const data = JSON.parse(window.localStorage.getItem("data"));
+    data[props.activeEventIndex].details[4].value = "No Action Needed";
+    window.localStorage.setItem("data", JSON.stringify(data));
+    props.storageChange();
+  };
   const panes = [
     {
       menuItem: "DETAILS",
@@ -33,10 +47,8 @@ const EventDetailsComponent = (props) => {
   ];
 
   const pointerIcon = new L.Icon({
-    iconUrl:
-      "https://cdn-sharing.adobecc.com/id/urn:aaid:sc:US:22ab8275-0380-44be-9bda-61aa91baa399;version=0?component_id=a26758b6-8aa6-4c4a-992c-256589600590&api_key=CometServer1&access_token=1602108496_urn%3Aaaid%3Asc%3AUS%3A22ab8275-0380-44be-9bda-61aa91baa399%3Bpublic_7eb007d7084938b7a3ab84275955e214f4be99fd",
-    iconRetinaUrl:
-      "https://cdn-sharing.adobecc.com/id/urn:aaid:sc:US:22ab8275-0380-44be-9bda-61aa91baa399;version=0?component_id=a26758b6-8aa6-4c4a-992c-256589600590&api_key=CometServer1&access_token=1602108496_urn%3Aaaid%3Asc%3AUS%3A22ab8275-0380-44be-9bda-61aa91baa399%3Bpublic_7eb007d7084938b7a3ab84275955e214f4be99fd",
+    iconUrl: "https://i.ibb.co/jHWv9BX/Primary-Pin.png",
+    iconRetinaUrl: "https://i.ibb.co/jHWv9BX/Primary-Pin.png",
     iconAnchor: [5, 55],
     iconSize: [35, 50],
   });
@@ -81,12 +93,41 @@ const EventDetailsComponent = (props) => {
   };
 
   const MediaComponent = () => {
+    const [open, setOpen] = useState(false);
     const { event } = props;
     return (
       <Segment>
+        <Modal onClose={() => setOpen(false)} open={open}>
+          <Modal.Content>
+            <Image
+              centered
+              fluid
+              src={event?.media[0].url}
+              label={{
+                as: "a",
+                basic: true,
+                attached: "bottom right",
+                icon: "compress",
+                onClick: () => setOpen(false),
+                size: "huge",
+              }}
+            />
+          </Modal.Content>
+        </Modal>
         {event?.media ? (
           event.media[0].type === "image" ? (
-            <Image src={event?.media[0].url} size="large" />
+            <Image
+              fluid
+              src={event?.media[0].url}
+              label={{
+                as: "a",
+                basic: true,
+                attached: "bottom right",
+                icon: "expand",
+                onClick: () => setOpen(true),
+                size: "huge",
+              }}
+            />
           ) : (
             <audio controls src={event?.media[0].url}>
               Your browser does not support the
@@ -102,12 +143,26 @@ const EventDetailsComponent = (props) => {
 
   return (
     <Segment padded textAlign="center">
-      <Button
-        style={{ backgroundColor: "#454F63", color: "white", width: "14vw" }}
-      >
-        NO ACTION NEEDED
-      </Button>
-      <ModelComponent />
+      {props.event.details[4].value === "-" ? (
+        <div>
+          <Button
+            onClick={noActionHandle}
+            style={{
+              backgroundColor: "#454F63",
+              color: "white",
+              width: "14vw",
+            }}
+          >
+            NO ACTION NEEDED
+          </Button>
+          <ModelComponent
+            activeEventIndex={props.activeEventIndex}
+            storageChange={props.storageChange}
+          />
+        </div>
+      ) : (
+        ""
+      )}
       <Tab
         style={{ paddingTop: "2vh" }}
         menu={{ secondary: true, pointing: true }}

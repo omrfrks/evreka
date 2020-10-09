@@ -10,11 +10,10 @@ import {
   TextArea,
   Loader,
   Dimmer,
-  Image,
   Icon,
 } from "semantic-ui-react";
 
-const ModelComponent = () => {
+const ModelComponent = (props) => {
   const [firstOpen, setFirstOpen] = useState(false);
   const [secondOpen, setSecondOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -40,6 +39,14 @@ const ModelComponent = () => {
   ];
   const handleTakeActionClick = () => {
     setLoading(true);
+    if (resolutionValue !== "") {
+      const action =
+        actionContent[selectedAction].props.children[0].props.content;
+      const data = JSON.parse(window.localStorage.getItem("data"));
+      data[props.activeEventIndex].details[4].value = action;
+      window.localStorage.setItem("data", JSON.stringify(data));
+      props.storageChange();
+    }
     setFirstOpen(false);
     setSecondOpen(true);
     setTimeout(function () {
@@ -49,17 +56,17 @@ const ModelComponent = () => {
 
   const actionContent = [
     <div>
-      <Header as="h4" style={{ color: "inherit" }}>
-        Mark As Resolved
-      </Header>
+      <Header
+        as="h4"
+        style={{ color: "inherit" }}
+        content={"Mark As Resolved"}
+      />
       <p>
         Mark this event as resolved and enter the details of the resolution.
       </p>
     </div>,
     <div>
-      <Header as="h4" style={{ color: "inherit" }}>
-        Change Asset
-      </Header>
+      <Header as="h4" style={{ color: "inherit" }} content={"Change Asset"} />
       <p>Change the asset with another one.</p>
     </div>,
   ];
@@ -215,7 +222,12 @@ const ModelComponent = () => {
             TAKE ACTION
           </Button>
         }
-        onClose={() => setFirstOpen(false)}
+        onClose={() => {
+          setFirstOpen(false);
+          setActiveIndex(0);
+          setSelectedAction(null);
+          setResolutionValue("");
+        }}
         onOpen={() => setFirstOpen(true)}
       >
         <Modal.Content>
