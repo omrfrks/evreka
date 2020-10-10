@@ -13,7 +13,7 @@ import {
 } from "semantic-ui-react";
 import { actionResponses, actionContent } from "../constants";
 
-const ModelComponent = (props) => {
+const ModalComponent = (props) => {
   const [firstOpen, setFirstOpen] = useState(false);
   const [secondOpen, setSecondOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -208,4 +208,4 @@ const ModelComponent = (props) => {
   );
 };
 
-export default ModelComponent;
+export default ModalComponent;

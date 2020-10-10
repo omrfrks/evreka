@@ -9,8 +9,9 @@ import {
   Modal,
 } from "semantic-ui-react";
 import { Map, Marker, TileLayer } from "react-leaflet";
-import ModelComponent from "./Modal";
+import ModalComponent from "./Modal";
 import { pointerIcon, STRINGS } from "../constants";
+
 const EventDetailsComponent = (props) => {
   const panes = [
     {
@@ -147,7 +148,7 @@ const EventDetailsComponent = (props) => {
           >
             NO ACTION NEEDED
           </Button>
-          <ModelComponent
+          <ModalComponent
             activeEventIndex={props.activeEventIndex}
             storageChange={props.storageChange}
           />

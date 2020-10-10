@@ -15,10 +15,10 @@
   ) !important;
 }
 .nextButton {
-  background-color: #3da836;
-  color: white;
+  background-color: #3da836 !important;
+  color: white !important;
   width: 8vw;
-  margin-left: 40%;
+  margin-left: 40% !important;
 }
 .ui.basic.label {
   background: none !important;
@@ -30,7 +30,7 @@
   height: 89vh;
 }
 .actionContent {
-  color: inherit;
+  color: inherit !important;
 }
 .actionResponse {
   text-align: center;
@@ -88,4 +88,11 @@ button {
   margin-left: 4vw !important;
   padding-top: 13vh !important;
   margin-right: 1vw !important;
+}
+
+.sortButton {
+  background-color: #454f63 !important;
+  color: white !important;
+  width: 14vw !important;
+  margin-left: 1vw !important;
 }

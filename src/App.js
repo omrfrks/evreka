@@ -16,8 +16,8 @@ function App() {
   const [eventDetails, setEventDetails] = useState(null);
   const [activeEventIndex, setActiveEventIndex] = useState(null);
 
-
   let activeEvent = null;
+
   const handleEventClick = (event, i, e) => {
     setActiveEventIndex(i);
     if (activeEvent) {
@@ -46,15 +46,18 @@ function App() {
     });
     setEventElements(EventElementsTemp);
   };
+
   const storageChange = () => {
     setData(JSON.parse(window.localStorage.getItem("data")));
   };
+
   useEffect(() => {
     if (!window.localStorage.getItem("data")) {
       window.localStorage.setItem("data", JSON.stringify(example.data));
       setData(example.data);
     }
     if (data) {
+      setEventDetails(data[activeEventIndex]);
       data.forEach((event) => {
         event.details[0].value = new Date(
           event.details[0].value
@@ -71,9 +74,7 @@ function App() {
       <Grid className={"mainContainer"}>
         <Grid.Column width={10} style={{ overflowY: "auto", height: "89vh" }}>
           <Header as="h1">EVENTS</Header>
-          <SortAndFilterComponent
-            children={EventElements}
-          />
+          <SortAndFilterComponent children={EventElements} />
         </Grid.Column>
         <Grid.Column width={6} className={"eventDetailsContainer"}>
           <Header as="h1">EVENT DETAILS</Header>

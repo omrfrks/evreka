@@ -80,11 +80,7 @@ const SortAndFilterComponent = ({ children }) => {
         onClick={() => {
           setSortWay(sortWay * -1);
         }}
-        style={{
-          backgroundColor: "#454F63",
-          color: "white",
-          width: "14vw",
-        }}
+        className={"sortButton"}
       >
         Sort
         <Icon
