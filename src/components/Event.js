@@ -1,6 +1,6 @@
 import React from "react";
 import { List, Segment } from "semantic-ui-react";
-
+import { LISTTITLES } from "../constants";
 const EventComponent = (props) => (
   <Segment
     onClick={props.handleClick}
@@ -10,19 +10,19 @@ const EventComponent = (props) => (
     <List relaxed horizontal>
       <List.Item>
         <List.Content>
-          <List.Header>Date</List.Header>
+          <List.Header>{LISTTITLES.DATE}</List.Header>
           {props.date}
         </List.Content>
       </List.Item>
       <List.Item>
         <List.Content>
-          <List.Header>Type</List.Header>
+          <List.Header>{LISTTITLES.TYPE}</List.Header>
           {props.type}
         </List.Content>
       </List.Item>
       <List.Item>
         <List.Content>
-          <List.Header>Bin Id</List.Header>
+          <List.Header>{LISTTITLES.BIN_ID}</List.Header>
           {props.id}
         </List.Content>
       </List.Item>
@@ -34,7 +34,7 @@ const EventComponent = (props) => (
       </List.Item>
       <List.Item>
         <List.Content>
-          <List.Header>Action</List.Header>
+          <List.Header>{LISTTITLES.ACTION}</List.Header>
           {props.action}
         </List.Content>
       </List.Item>

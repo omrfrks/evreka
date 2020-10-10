@@ -1,18 +1,44 @@
-.noActionEvent{
-background: linear-gradient(90deg, rgba(233,207,48,1) 0%, rgba(233,207,48,1) 1.3%, rgba(255,255,255,1) 1.3%) !important;
+.noActionEvent {
+  background: linear-gradient(
+    90deg,
+    rgba(233, 207, 48, 1) 0%,
+    rgba(233, 207, 48, 1) 1.3%,
+    rgba(255, 255, 255, 1) 1.3%
+  ) !important;
 }
-.noActionEvent.activeEvent{
-background: linear-gradient(90deg, rgba(233,207,48,1) 0%, rgba(233,207,48,1) 1.3%,rgb(233, 207, 48,0.2) 1.3%) !important;
+.noActionEvent.activeEvent {
+  background: linear-gradient(
+    90deg,
+    rgba(233, 207, 48, 1) 0%,
+    rgba(233, 207, 48, 1) 1.3%,
+    rgb(233, 207, 48, 0.2) 1.3%
+  ) !important;
 }
-.ui.basic.label{
+.nextButton {
+  background-color: #3da836;
+  color: white;
+  width: 8vw;
+  margin-left: 40%;
+}
+.ui.basic.label {
   background: none !important;
   border: none !important;
   color: white;
 }
-.activeEvent{
-  background:rgb(233, 207, 48,0.2) 1.3% !important;
+.eventDetailsContainer {
+  overflow-y: auto;
+  height: 89vh;
 }
-.ui.list>.item .header{
+.actionContent {
+  color: inherit;
+}
+.actionResponse {
+  text-align: center;
+}
+.activeEvent {
+  background: rgb(233, 207, 48, 0.2) 1.3% !important;
+}
+.ui.list > .item .header {
   text-transform: capitalize;
 }
 .ui.secondary.pointing.menu .active.item {
@@ -21,7 +47,7 @@ background: linear-gradient(90deg, rgba(233,207,48,1) 0%, rgba(233,207,48,1) 1.3
 .ui.inverted.dimmer .ui.loader:after {
   border-color: #3da836 transparent transparent;
 }
-button{
+button {
   box-shadow: 0px 3px 6px #00000029 !important;
 }
 .activeAction {
@@ -38,37 +64,28 @@ button{
 .ui.attached.segment {
   border: none;
 }
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  position: relative;
+  background-color: #ebecef;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.upperBar {
+  position: absolute;
+  background-color: #172c49;
+  width: 100%;
+  height: 9vh;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.leftBar {
+  position: absolute;
+  background-color: #172c49;
+  width: 4vw;
+  height: 100vh;
+  overflow: hidden;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.mainContainer {
+  margin-left: 4vw !important;
+  padding-top: 13vh !important;
+  margin-right: 1vw !important;
 }

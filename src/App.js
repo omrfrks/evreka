@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from "react";
 import EventComponent from "./components/Event";
 import "semantic-ui-css/semantic.min.css";
-import { Grid, Header, Dropdown } from "semantic-ui-react";
+import { Grid, Header } from "semantic-ui-react";
 import example from "./data";
 import EventDetailsComponent from "./components/EventDetails";
 import "./App.css";
-import Sort from "./components/Sort";
+import SortAndFilterComponent from "./components/SortandFilter";
 
 function App() {
+  //store data at localstorage
   const [data, setData] = useState(
     JSON.parse(window.localStorage.getItem("data")) || null
   );
   const [EventElements, setEventElements] = useState([]);
   const [eventDetails, setEventDetails] = useState(null);
   const [activeEventIndex, setActiveEventIndex] = useState(null);
-  const [activeDrapdownValue, setActiveDrapdownValue] = useState("date");
-  const dropdownOptions = [
-    { key: 1, text: "Date", value: "date" },
-    { key: 2, text: "Type", value: "type" },
-    { key: 3, text: "Bin id", value: "id" },
-    { key: 4, text: "Action", value: "action" },
-  ];
+
 
   let activeEvent = null;
   const handleEventClick = (event, i, e) => {
@@ -70,50 +65,17 @@ function App() {
   }, [data]);
 
   return (
-    <div
-      className="App"
-      style={{
-        position: "relative",
-        backgroundColor: "#EBECEF",
-        width: "100%",
-        height: "100vh",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          backgroundColor: "#172C49",
-          width: "100%",
-          height: "9vh",
-        }}
-      ></div>
-      <div
-        style={{
-          position: "absolute",
-          backgroundColor: "#172C49",
-          width: "4vw",
-          height: "100vh",
-          overflow: "hidden",
-        }}
-      ></div>
-      <Grid
-        style={{ marginLeft: "4vw", paddingTop: "13vh", marginRight: "1vw" }}
-      >
+    <div className="App">
+      <div className={"upperBar"}></div>
+      <div className={"leftBar"}></div>
+      <Grid className={"mainContainer"}>
         <Grid.Column width={10} style={{ overflowY: "auto", height: "89vh" }}>
           <Header as="h1">EVENTS</Header>
-          <Dropdown
-            placeholder="Select title to Sort"
-            onChange={(e, { value }) => {
-              setActiveDrapdownValue(value);
-            }}
-            search
-            selection
-            options={dropdownOptions}
+          <SortAndFilterComponent
+            children={EventElements}
           />
-          <Sort by={activeDrapdownValue} children={EventElements} />
         </Grid.Column>
-        <Grid.Column width={6} style={{ overflowY: "auto", height: "89vh" }}>
+        <Grid.Column width={6} className={"eventDetailsContainer"}>
           <Header as="h1">EVENT DETAILS</Header>
           {eventDetails ? (
             <EventDetailsComponent

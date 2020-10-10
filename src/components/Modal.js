@@ -10,8 +10,8 @@ import {
   TextArea,
   Loader,
   Dimmer,
-  Icon,
 } from "semantic-ui-react";
+import { actionResponses, actionContent } from "../constants";
 
 const ModelComponent = (props) => {
   const [firstOpen, setFirstOpen] = useState(false);
@@ -21,22 +21,6 @@ const ModelComponent = (props) => {
   const [loading, setLoading] = useState(false);
   const [resolutionValue, setResolutionValue] = useState("");
 
-  const actionResponses = [
-    <div style={{ textAlign: "center" }}>
-      <Icon size="huge" name="check circle outline" color="green" />
-      <Header as="h2" style={{ color: "#3DA836" }}>
-        ACTION HAS BEEN TAKEN!
-      </Header>
-      <p>You can see the action details from details tab.</p>
-    </div>,
-    <div style={{ textAlign: "center" }}>
-      <Icon size="huge" name="times circle outline" color="red" />
-      <Header as="h2" style={{ color: "#D92323" }}>
-        A PROBLEM OCCURED!
-      </Header>
-      <p>We cannot continue due to a problem. Please try again later.</p>
-    </div>,
-  ];
   const handleTakeActionClick = () => {
     setLoading(true);
     if (resolutionValue !== "") {
@@ -54,25 +38,10 @@ const ModelComponent = (props) => {
     }, 1000);
   };
 
-  const actionContent = [
-    <div>
-      <Header
-        as="h4"
-        style={{ color: "inherit" }}
-        content={"Mark As Resolved"}
-      />
-      <p>
-        Mark this event as resolved and enter the details of the resolution.
-      </p>
-    </div>,
-    <div>
-      <Header as="h4" style={{ color: "inherit" }} content={"Change Asset"} />
-      <p>Change the asset with another one.</p>
-    </div>,
-  ];
   const handleChange = (event) => {
     setResolutionValue(event.target.value);
   };
+
   const TakeActionComponent = () => {
     return (
       <div>
@@ -110,6 +79,7 @@ const ModelComponent = (props) => {
       </div>
     );
   };
+
   const SelectActionComponent = () => {
     return (
       <div>
@@ -125,12 +95,7 @@ const ModelComponent = (props) => {
         ))}
         <Button
           onClick={() => setActiveIndex(1)}
-          style={{
-            backgroundColor: "#3DA836",
-            color: "white",
-            width: "8vw",
-            marginLeft: "40%",
-          }}
+          className={"nextButton"}
           disabled={selectedAction == null ? true : false}
         >
           Next

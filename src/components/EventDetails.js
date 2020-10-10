@@ -9,16 +9,9 @@ import {
   Modal,
 } from "semantic-ui-react";
 import { Map, Marker, TileLayer } from "react-leaflet";
-import L from "leaflet";
 import ModelComponent from "./Modal";
-
+import { pointerIcon, STRINGS } from "../constants";
 const EventDetailsComponent = (props) => {
-  const noActionHandle = () => {
-    const data = JSON.parse(window.localStorage.getItem("data"));
-    data[props.activeEventIndex].details[4].value = "No Action Needed";
-    window.localStorage.setItem("data", JSON.stringify(data));
-    props.storageChange();
-  };
   const panes = [
     {
       menuItem: "DETAILS",
@@ -45,13 +38,12 @@ const EventDetailsComponent = (props) => {
       ),
     },
   ];
-
-  const pointerIcon = new L.Icon({
-    iconUrl: "https://i.ibb.co/jHWv9BX/Primary-Pin.png",
-    iconRetinaUrl: "https://i.ibb.co/jHWv9BX/Primary-Pin.png",
-    iconAnchor: [5, 55],
-    iconSize: [35, 50],
-  });
+  const noActionHandle = () => {
+    const data = JSON.parse(window.localStorage.getItem("data"));
+    data[props.activeEventIndex].details[4].value = STRINGS.NO_ACTION;
+    window.localStorage.setItem("data", JSON.stringify(data));
+    props.storageChange();
+  };
 
   const DetailComponent = () => {
     const { event } = props;
@@ -86,7 +78,7 @@ const EventDetailsComponent = (props) => {
             <Marker position={position} icon={pointerIcon}></Marker>
           </Map>
         ) : (
-          <p>There is no map information</p>
+          <p>{STRINGS.NO_LOCATION}</p>
         )}
       </Segment>
     );
@@ -135,7 +127,7 @@ const EventDetailsComponent = (props) => {
             </audio>
           )
         ) : (
-          <p>No Media Content</p>
+          <p>{STRINGS.NO_MEDIA}</p>
         )}
       </Segment>
     );
